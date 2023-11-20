@@ -2,8 +2,8 @@ from mininet.topo import Topo
 from mininet.link import TCLink
 import sys
 
-PACKAGE_LOSS_PATH = "package_loss.txt"
-HOSTS_AMOUNT_PATH = "amount_hosts.txt"
+HOSTS_AMOUNT = 2
+SWITCHES_AMOUNT_PATH = "amount_switches.txt"
 
 def get_first_value_from_file(path):
     try:
@@ -17,27 +17,31 @@ class Project(Topo):
         # Initialize topology
         Topo.__init__(self)
 
-        num_hosts = 3 #get_first_value_from_file(HOSTS_AMOUNT_PATH)
-        package_loss = 10 #get_first_value_from_file(PACKAGE_LOSS_PATH)
+        num_switches = get_first_value_from_file(SWITCHES_AMOUNT_PATH)
 
         # Add hosts
-        # First host should act as server.
-        for i in range(1, num_hosts + 1):
-            host = self.addHost("h{0}".format(i), ip="10.0.0.{0}".format(i))
+        print("Adding hosts..")
+        hosts_list = []
+        for i in range(1, HOSTS_AMOUNT + 1):
+            hosts_list.append(self.addHost("h{0}".format(i), ip="10.0.0.{0}".format(i)))
             print("Creating host h{0}..".format(i) + " with ip address 10.0.0.{0}".format(i))
 
-        # Add switch
-        print("Adding switch s1..")
-        s1 = self.addSwitch('s1')
+        # Add switches
+        print("Adding switches..")
+        switches_list = []
+        for i in range(1, num_switches + 1):
+            switches_list.append(self.addSwitch("s{0}".format(i)))
+            print("Creating switch s{0}..".format(i))
 
-        # Add links from hosts to switch.
-        # Add package loss to the first host only regarding on package_loss value.
-        for i in range(1, num_hosts + 1):
-            if i == 1:
-            	print("Adding server h{0}..".format(i))
-            	self.addLink("h{0}".format(i), s1, cls=TCLink, loss=package_loss)
-            else:
-            	print("Adding host h{0}..".format(i))
-            	self.addLink("h{0}".format(i), s1, cls=TCLink)
-            	
+        # Add links from hosts to switches - First host to first switch & last/second host to last switch.
+        print("Adding link between the first host and the second switch...")
+        self.addLink(hosts_list[0], switches_list[0])
+        print("Adding link between the last host and the last switch...")
+        self.addLink(hosts_list[-1], switches_list[-1])
+        
+        print("Adding links between switches..")
+        for i in range(1, num_switches)
+            print("Adding link {0}..".format(i))
+            self.addLink(switches_list[i], switches_list[i+1], cls=TCLink, loss=0)
+
 topos = {'project': (lambda: Project())}

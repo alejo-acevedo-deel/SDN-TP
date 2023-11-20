@@ -2,10 +2,9 @@ import os
 import sys
 import subprocess
 
-ARGUMENTS_AMOUNT = 3
-PACKAGE_LOSS_PATH = "package_loss.txt"
-HOSTS_AMOUT_PATH = "amount_hosts.txt"
-
+HOSTS_AMOUNT = 2
+ARGUMENTS_AMOUNT = 2
+SWITCHES_AMOUT_PATH = "amount_switches.txt"
 
 def append_logs(log, path):
     try:
@@ -19,33 +18,24 @@ def append_logs(log, path):
         with open(path, "w") as f:
             f.write(log)
 
-
-def create_logs(package_loss, hosts_amount):
-    print("La probabilidad de la perdida de paquetes sera: {0}".format(package_loss))
-    print("El numero de hosts sera: {0}".format(hosts_amount))
-    append_logs(str(hosts_amount), HOSTS_AMOUT_PATH)
-    append_logs(str(package_loss), PACKAGE_LOSS_PATH)
-
+def create_logs(switches_amount):
+    print("El numero de switches sera: {0}".format(switches_amount))
+    print("El numero de hosts sera: {0}".format(HOSTS_AMOUNT))
+    append_logs(str(switches_amount), SWITCHES_AMOUT_PATH)
 
 if len(sys.argv) != ARGUMENTS_AMOUNT:
-    print("Por favor ingresa como primer parametro la cantidad de hosts (entre 2 y 10) y como segundo parametro, el porcentaje de package loss (entre 0 y 100.")
-    hosts_parameter = input("Ingrese la cantidad de hosts: ")
-    package_loss_parameter = input("Ingrese el porcentaje de perdida de paquetes: ")
+    print("Por favor ingresa como primer parametro la cantidad de switches (entre 1 y 10).")
+    switches_parameter = input("Ingrese la cantidad de switches: ")
 else:
-    hosts_parameter = sys.argv[1]
-    package_loss_parameter = sys.argv[2]
+    switches_parameter = sys.argv[1]
 
-    if hosts_parameter.isdigit() and package_loss_parameter.isdigit():
-        package_loss = int(package_loss_parameter)
-        hosts_amount = int(hosts_parameter)
-        if package_loss >= 0 and package_loss <= 100:
-            if hosts_amount >= 1 and hosts_amount <= 10:
-                create_logs(package_loss, hosts_amount)
+    if switches_parameter.isdigit():
+        switches_amount = int(switches_parameter)
+            if switches_amount >= 1 and switches_amount <= 10:
+                create_logs(switches_amount)
                 mn_command = ["sudo", "mn", "--custom", "topology.py", "--topo", "project"]
                 subprocess.run(mn_command)
             else:
-                print("Error: el primer parametro (cantidad de hosts) tiene que estar entre 2 y 10.")
-        else:
-            print("Error: el segundo parametro (procentaje de la perdida de paquetes) tiene que estar entre 0 y 100.")
+                print("Error: el primer parametro (cantidad de switches) tiene que estar entre 1 y 10.")
     else:
-        print("Error: Todos los inputs deben ser numeros.")
+        print("Error: Todos los inputs deben ser numeros enteros positivos.")
