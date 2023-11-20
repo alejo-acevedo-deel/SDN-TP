@@ -31,11 +31,11 @@ else:
 
     if switches_parameter.isdigit():
         switches_amount = int(switches_parameter)
-            if switches_amount >= 1 and switches_amount <= 10:
-                create_logs(switches_amount)
-                mn_command = ["sudo", "mn", "--custom", "topology.py", "--topo", "project"]
-                subprocess.run(mn_command)
-            else:
-                print("Error: el primer parametro (cantidad de switches) tiene que estar entre 1 y 10.")
+        if switches_amount >= 1 and switches_amount <= 10:
+            create_logs(switches_amount)
+            mn_command = ["sudo", "mn", "--custom", "topology.py", "--topo", "project"]
+            subprocess.run(mn_command)
+        else:
+            print("Error: el primer parametro (cantidad de switches) tiene que estar entre 1 y 10.")
     else:
         print("Error: Todos los inputs deben ser numeros enteros positivos.")

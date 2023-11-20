@@ -40,8 +40,8 @@ class Project(Topo):
         self.addLink(hosts_list[-1], switches_list[-1])
         
         print("Adding links between switches..")
-        for i in range(1, num_switches)
-            print("Adding link {0}..".format(i))
+        for i in range(len(switches_list) -1):
+            print("Adding link between the switch {0} and {1}..".format(i+1, i+2))
             self.addLink(switches_list[i], switches_list[i+1], cls=TCLink, loss=0)
 
 topos = {'project': (lambda: Project())}
