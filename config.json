@@ -1,3 +1,24 @@
 {
-    "test": "valor test"
+    "rules": [
+        {
+            "name": "Block 80 port connections",
+            "destPort": 80
+        },
+        {
+            "name": "Block UDP H1 Packets",
+            "protocol": "UDP",
+            "destPort": 5001,
+            "destIp": "10.0.0.1"
+        },
+        {
+            "name": "Block H1 -> H4",
+            "destIp": "10.0.0.4",
+            "srcIp": "10.0.0.1"
+        },
+        {
+            "name": "Block H4 -> H1",
+            "destIp": "10.0.0.1",
+            "srcIp": "10.0.0.4"
+        }
+    ]
 }

@@ -2,7 +2,7 @@ from mininet.topo import Topo
 from mininet.link import TCLink
 import sys
 
-HOSTS_AMOUNT = 2
+HOSTS_AMOUNT = 4
 SWITCHES_AMOUNT_PATH = "amount_switches.txt"
 
 def get_first_value_from_file(path):
@@ -36,8 +36,11 @@ class Project(Topo):
         # Add links from hosts to switches - First host to first switch & last/second host to last switch.
         print("Adding link between the first host and the second switch...")
         self.addLink(hosts_list[0], switches_list[0])
+        self.addLink(hosts_list[1], switches_list[0])
+
         print("Adding link between the last host and the last switch...")
         self.addLink(hosts_list[-1], switches_list[-1])
+        self.addLink(hosts_list[-2], switches_list[-1])
         
         print("Adding links between switches..")
         for i in range(len(switches_list) -1):
