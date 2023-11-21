@@ -14,7 +14,8 @@ class JsonParse:
             print('No se encontro el archivo: ' + json_file)
             return None
         except json.decoder.JSONDecodeError as e:
-            print('No se pudo decodificar el archivo: ' + json_file)
+            print('No se pudo parsear el archivo: ' + json_file)
+            print(e)
             return None
 
     def get_json_data(self):
