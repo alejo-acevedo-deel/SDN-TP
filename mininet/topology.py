@@ -33,12 +33,12 @@ class Project(Topo):
             switches_list.append(self.addSwitch("s{0}".format(i)))
             print("Creating switch s{0}..".format(i))
 
-        # Add links from hosts to switches - First host to first switch & last/second host to last switch.
-        print("Adding link between the first host and the second switch...")
+        # Add links from hosts to switches - First hosts to first switch & last/second hosts to last switch.
+        print("Adding link between the first hosts and the first switch...")
         self.addLink(hosts_list[0], switches_list[0])
         self.addLink(hosts_list[1], switches_list[0])
 
-        print("Adding link between the last host and the last switch...")
+        print("Adding link between the last hosts and the last switch...")
         self.addLink(hosts_list[-1], switches_list[-1])
         self.addLink(hosts_list[-2], switches_list[-1])
         

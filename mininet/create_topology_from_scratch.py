@@ -2,7 +2,7 @@ import os
 import sys
 import subprocess
 
-HOSTS_AMOUNT = 2
+HOSTS_AMOUNT = 4
 ARGUMENTS_AMOUNT = 2
 SWITCHES_AMOUT_PATH = "amount_switches.txt"
 
